@@ -7,7 +7,7 @@ export default function Projects() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/projects")
+      .get("https://portfolio-n7hi.onrender.coms")
       .then((res) => {
         setProjects(res.data)
         setLoading(false)

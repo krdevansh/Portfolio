@@ -19,7 +19,7 @@ export default function Contact() {
     setStatus("Sending...")
 
     try {
-      await axios.post("http://localhost:5000/api/contact", form)
+      await axios.post("https://portfolio-n7hi.onrender.com", form)
       setStatus("Message sent successfully ✅")
       setForm({ name: "", email: "", message: "" })
     } catch (err) {
