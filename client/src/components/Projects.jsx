@@ -7,13 +7,13 @@ export default function Projects() {
 
   useEffect(() => {
     axios
-      .get("https://portfolio-n7hi.onrender.coms")
+      .get("https://portfolio-n7hi.onrender.com/api/projects")
       .then((res) => {
         setProjects(res.data)
         setLoading(false)
       })
       .catch((err) => {
-        console.error(err)
+        console.error("Projects API error:", err)
         setLoading(false)
       })
   }, [])
@@ -39,20 +39,17 @@ export default function Projects() {
             className="group border rounded-2xl p-6 transition-all
                        hover:-translate-y-1 hover:shadow-2xl"
           >
-            {/* Title */}
             <h3 className="text-2xl font-semibold transition
                            group-hover:text-blue-500">
               {project.title}
             </h3>
 
-            {/* Description */}
             <p className="mt-3 opacity-80 leading-relaxed">
               {project.description}
             </p>
 
-            {/* Tech stack */}
             <div className="flex flex-wrap gap-2 mt-5">
-              {project.tech.map((t, i) => (
+              {project.tech?.map((t, i) => (
                 <span
                   key={i}
                   className="px-3 py-1 text-xs rounded-full border opacity-80"
@@ -62,7 +59,6 @@ export default function Projects() {
               ))}
             </div>
 
-            {/* Action buttons */}
             <div className="flex gap-4 mt-6">
               {project.github && (
                 <a
