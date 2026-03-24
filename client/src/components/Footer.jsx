@@ -2,19 +2,19 @@ import Container from "./Container"
 
 export default function Footer() {
   return (
-    <footer className="border-t py-10 mt-32">
+    <footer className="w-full border-t border-white/10 py-12 mt-10 bg-black/40 backdrop-blur-md relative z-10">
       <Container>
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="opacity-70 text-sm">
-            © {new Date().getFullYear()} Kumar Devansh. All rights reserved.
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="opacity-60 text-sm tracking-wide">
+            © {new Date().getFullYear()} Kumar Devansh. Building the future.
           </p>
 
-          <div className="flex gap-4 items-center flex-wrap justify-center">
+          <div className="flex gap-6 items-center flex-wrap justify-center font-medium text-sm">
             <a
               href="https://github.com/krdevansh"
               target="_blank"
               rel="noreferrer"
-              className="hover:underline"
+              className="text-white/60 hover:text-white transition-colors"
             >
               GitHub
             </a>
@@ -23,7 +23,7 @@ export default function Footer() {
               href="https://linkedin.com/in/krdevansh"
               target="_blank"
               rel="noreferrer"
-              className="hover:underline"
+              className="text-white/60 hover:text-white transition-colors"
             >
               LinkedIn
             </a>
@@ -32,21 +32,19 @@ export default function Footer() {
               href="mailto:kumardevanshd3vil@gmail.com"
               target="_blank"
               rel="noreferrer"
-              className="hover:underline"
+              className="text-white/60 hover:text-white transition-colors"
             >
               Email
             </a>
 
             <a
-  href="/Devansh General CV.pdf"
-  target="_blank"
-  rel="noreferrer"
-  className="hover:underline"
->
-  Resume
-</a>
-
-    
+              href="/Devansh General CV.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all"
+            >
+              Resume
+            </a>
           </div>
         </div>
       </Container>

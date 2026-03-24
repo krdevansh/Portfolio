@@ -1,22 +1,29 @@
 const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
-require("dotenv").config()
+const http = require("http")
+const { Server } = require("socket.io")
+require("dotenv").config({ path: __dirname + '/.env' })
 
-// CREATE APP FIRST
 const app = express()
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: "*", // allow frontend access
+    methods: ["GET", "POST"]
+  }
+})
 
-// MIDDLEWARE
 app.use(cors())
 app.use(express.json())
 
-// CONNECT MONGODB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))
-  .catch((err) => console.error("MongoDB error:", err))
+  .catch((err) => {
+  console.error("MongoDB connection error:", err)
+})
 
-// MODELS
 const Project = mongoose.model(
   "Project",
   new mongoose.Schema({
@@ -41,24 +48,53 @@ const Message = mongoose.model(
   })
 )
 
-// ROUTES
 app.get("/", (req, res) => {
   res.send("Backend running 🚀")
 })
 
 app.get("/api/projects", async (req, res) => {
-  const projects = await Project.find()
-  res.json(projects)
+  try {
+    const projects = await Project.find()
+    res.json(projects)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ msg: "Failed to fetch projects" })
+  }
 })
 
 app.post("/api/contact", async (req, res) => {
-  const message = new Message(req.body)
-  await message.save()
-  res.json({ success: true })
+  try {
+    const { name, email, message } = req.body
+    if (!name || !email || !message) {
+      return res.status(400).json({ msg: "All fields required" })
+    }
+
+    await Message.create({ name, email, message })
+    res.json({ success: true })
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" })
+  }
 })
 
-// START SERVER
+io.on("connection", (socket) => {
+  console.log("New chess client connected:", socket.id)
+  
+  socket.on("join-room", (roomId) => {
+    socket.join(roomId)
+    console.log(`Socket ${socket.id} joined room ${roomId}`)
+  })
+
+  socket.on("move", ({ roomId, move }) => {
+    // Broadcast the move to everyone else in the room
+    socket.to(roomId).emit("move", move)
+  })
+
+  socket.on("disconnect", () => {
+    console.log("Chess client disconnected:", socket.id)
+  })
+})
+
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })
