@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { motion, AnimatePresence } from "framer-motion"
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5001"
+const API = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5001")
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" })

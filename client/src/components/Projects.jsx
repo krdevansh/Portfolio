@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { motion } from "framer-motion"
 
-// Using local API for development and production if deployed correctly
-const API = import.meta.env.VITE_API_URL || "http://localhost:5001"
+// Using relative URL for Vercel serverless deployment, or fallback to dev server
+const API = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "" : "http://localhost:5001")
 
 export default function Projects() {
   const [projects, setProjects] = useState([])
