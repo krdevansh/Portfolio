@@ -31,7 +31,7 @@ export default function Music() {
           <iframe 
             width="100%" 
             height="100%" 
-            src="https://www.youtube.com/embed/videoseries?list=PL9bw4S5ePsEGpT9PdWJYN8joMa2eWAxJf"
+            src="https://www.youtube.com/embed/7KKVb0_IdD4?list=PLCbF9SyWRbwiMX6fqkFCSDKsxzi_Z8kAx"
             title="YouTube video player" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
