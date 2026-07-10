@@ -16,13 +16,14 @@ const Project = mongoose.models.Project || mongoose.model(
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     if (!isConnected) {
-      await mongoose.connect(process.env.MONGO_URI || "mongodb+srv://portfolioUser:kumar.12324506@portfolio-cluster.vmvm2x4.mongodb.net/portfolio?appName=portfolio-cluster");
+      await mongoose.connect(process.env.MONGO_URI || "mongodb+srv://portfolio_render:<db_password>@cluster0.3amnctv.mongodb.net/My-portfolio?retryWrites=true&w=majority");
       isConnected = true;
     }
     try {
       const projects = await Project.find();
       res.status(200).json(projects);
     } catch (err) {
+      console.error("Projects API error:", err);
       res.status(500).json({ msg: "Failed to fetch projects" });
     }
   } else {

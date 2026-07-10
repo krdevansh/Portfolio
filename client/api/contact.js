@@ -13,7 +13,7 @@ const Message = mongoose.models.Message || mongoose.model(
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     if (!isConnected) {
-      await mongoose.connect(process.env.MONGO_URI || "mongodb+srv://portfolioUser:kumar.12324506@portfolio-cluster.vmvm2x4.mongodb.net/portfolio?appName=portfolio-cluster");
+      await mongoose.connect(process.env.MONGO_URI || "mongodb+srv://portfolio_render:<db_password>@cluster0.3amnctv.mongodb.net/My-portfolio?retryWrites=true&w=majority");
       isConnected = true;
     }
     try {
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
       await Message.create({ name, email, message });
       res.status(200).json({ success: true });
     } catch (err) {
+      console.error("Contact API error:", err);
       res.status(500).json({ msg: "Server error" });
     }
   } else {

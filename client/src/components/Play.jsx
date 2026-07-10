@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Chess } from "chess.js"
 import { Chessboard } from "react-chessboard"
 import { motion } from "framer-motion"
 
 export default function Play() {
   const [game, setGame] = useState(new Chess())
-  const [status, setStatus] = useState("Make a move to start the match!")
   const [moveFrom, setMoveFrom] = useState(null)
 
-  useEffect(() => {
+  let status = "Make a move to start the match!"
+  if (game.history().length > 0) {
     if (game.isCheckmate()) {
-      setStatus(game.turn() === "w" ? "Checkmate! You lost." : "Checkmate! You won!")
+      status = game.turn() === "w" ? "Checkmate! You lost." : "Checkmate! You won!"
     } else if (game.isDraw()) {
-      setStatus("Draw! Game over.")
+      status = "Draw! Game over."
     } else if (game.isCheck()) {
-      setStatus("Check!")
+      status = "Check!"
     } else {
-      setStatus(game.turn() === "w" ? "Your turn!" : "Kumar Devansh is thinking...")
+      status = game.turn() === "w" ? "Your turn!" : "Kumar Devansh is thinking..."
     }
-  }, [game])
+  }
 
   const makeBotMove = (currentGame) => {
     const possibleMoves = currentGame.moves()
@@ -42,7 +42,6 @@ export default function Play() {
 
   const resetGame = () => {
     setGame(new Chess())
-    setStatus("Game reset. Make a move!")
     setMoveFrom(null)
   }
 
@@ -54,14 +53,14 @@ export default function Play() {
 
     try {
       move = gameCopy.move({ from: sourceSquare, to: targetSquare })
-    } catch (e) {
+    } catch {
       move = null
     }
 
     if (!move) {
       try {
         move = gameCopy.move({ from: sourceSquare, to: targetSquare, promotion: "q" })
-      } catch (e) {
+      } catch {
         return false // Illegal move entirely
       }
     }

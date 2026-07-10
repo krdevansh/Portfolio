@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const ROLES = [
   "Full-Stack MERN Developer",
@@ -12,7 +12,6 @@ const ROLES = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [roleIndex, setRoleIndex] = useState(0)
-  const location = useLocation()
 
   useEffect(() => {
     const interval = setInterval(() => {
